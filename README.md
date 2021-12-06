@@ -7,4 +7,4 @@ Não pode usar email repetido
 Foi usado:
 Express <br>
 Bcrypt para criptografar a senha <br>
-jsonwebtoken
+Jsonwebtoken para autenticação de usuario <br>
