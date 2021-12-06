@@ -2,7 +2,7 @@
 
 #### Regras
 Não pode usar email repetido
-
+<br>
 #### Ferramentas
 Foi usado:
 Express <br>
