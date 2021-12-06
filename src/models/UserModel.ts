@@ -20,6 +20,10 @@ export const UserModel = db.define("user", {
   },
 
   password: {
+    type: DataTypes.VIRTUAL,
+  },
+
+  passwordHash: {
     type: DataTypes.STRING,
     allowNull: false,
   },

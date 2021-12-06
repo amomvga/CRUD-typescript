@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UserModel } from "../models/UserModel";
+import bcrypt from "bcryptjs";
 
 class UserController {
   async findAll(req: Request, res: Response) {
@@ -26,6 +27,7 @@ class UserController {
 
   async create(req: Request, res: Response) {
     const { email, name, password } = req.body;
+    const hash = await bcrypt.hash(password, 8);
     const userExists = await UserModel.findOne({ where: { email: email } });
     if (userExists) {
       return res.status(400).json({ error: "Email already exists" });
@@ -34,7 +36,7 @@ class UserController {
     const user = await UserModel.create({
       email,
       name,
-      password,
+      passwordHash: hash,
     });
     return res.status(201).json(user);
   }
