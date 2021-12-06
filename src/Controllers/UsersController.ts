@@ -26,6 +26,11 @@ class UserController {
 
   async create(req: Request, res: Response) {
     const { email, name, password } = req.body;
+    const userExists = await UserModel.findOne({ where: { email: email } });
+    if (userExists) {
+      return res.status(400).json({ error: "Email already exists" });
+    }
+
     const user = await UserModel.create({
       email,
       name,
