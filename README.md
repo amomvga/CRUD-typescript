@@ -6,4 +6,5 @@ Não pode usar email repetido
 #### Ferramentas
 Foi usado:
 Express <br>
-Bcrypt para criptografar a senha
+Bcrypt para criptografar a senha <br>
+jsonwebtoken
