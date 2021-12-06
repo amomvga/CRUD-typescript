@@ -5,5 +5,5 @@ Não pode usar email repetido
 
 #### Ferramentas
 Foi usado:
-Express
+Express <br>
 Bcrypt para criptografar a senha
