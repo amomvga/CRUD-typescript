@@ -63,7 +63,6 @@ class UserController {
         return res.status(401).json({ error: "Password does not match" });
       }
       const hash = await bcrypt.hash(password, 8);
-      console.log(hash);
 
       await UserModel.update(
         { passwordHash: hash },
