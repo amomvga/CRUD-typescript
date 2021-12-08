@@ -42,9 +42,41 @@ class UserController {
   }
 
   async update(req: Request, res: Response) {
+    const { email, oldPassword, password } = req.body;
     const { userID } = req.params;
-    await UserModel.update(req.body, { where: { id: userID } });
-    return res.status(204).send();
+    const userId = await UserModel.findByPk(userID);
+
+    if (email !== userId.getDataValue("email")) {
+      const userExists = await UserModel.findOne({ where: { email: email } });
+      if (userExists) {
+        return res.status(400).json({ error: "Email already exists" });
+      }
+    }
+
+    if (oldPassword) {
+      const isValidPass: boolean = await bcrypt.compare(
+        oldPassword,
+        userId.getDataValue("passwordHash")
+      );
+
+      if (!isValidPass) {
+        return res.status(401).json({ error: "Password does not match" });
+      }
+      const hash = await bcrypt.hash(password, 8);
+      console.log(hash);
+
+      await UserModel.update(
+        { passwordHash: hash },
+        {
+          where: { id: userID },
+        }
+      );
+    }
+
+    await UserModel.update(req.body, {
+      where: { id: userID },
+    });
+    return res.json({ ok: true });
   }
 
   async destroy(req: Request, res: Response) {
